@@ -80,13 +80,14 @@ rlassologit.formula <- function(formula, data = NULL, post = TRUE, intercept = T
   y <- model.response(mf, "numeric")
   n <- length(y)
   x <- model.matrix(mt, mf)[,-1, drop=FALSE]
-  if (missing(data)) {
-    if (is.call(formula[[3]])) {
-      colnames(x) <- gsub(re.escape(format(formula[[3]])), "", colnames(x))
-    } else {
-      colnames(x) <- gsub(re.escape(formula[[3]]), "", colnames(x))  
-    }
-  }
+  colnames(x) <- sub("dx", "", colnames(x))
+  #if (missing(data)) {
+  #  if (is.call(formula[[3]])) {
+  #    colnames(x) <- gsub(re.escape(format(formula[[3]])), "", colnames(x))
+  #  } else {
+  #    colnames(x) <- gsub(re.escape(formula[[3]]), "", colnames(x))  
+  #  }
+  #}
   est <- rlassologit(x, y, post = post, intercept = intercept, model = model, penalty = penalty,  
                          control = control,  ...)
   est$call <- cl
